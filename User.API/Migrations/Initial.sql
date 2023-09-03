@@ -1,0 +1,42 @@
+DROP SCHEMA IF EXISTS public CASCADE;
+CREATE SCHEMA IF NOT EXISTS public;
+
+DROP SCHEMA IF EXISTS enum CASCADE;
+CREATE SCHEMA IF NOT EXISTS enum;
+
+-- Extension initialization.
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE enum.gender
+(
+	gender_id INT GENERATED ALWAYS AS IDENTITY 
+		CONSTRAINT eg_pkey PRIMARY KEY,
+
+	"name" TEXT NOT NULL,
+
+	created_at TIMESTAMPTZ NOT NULL
+		DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_account
+(
+	"user_id"	UUID
+			CONSTRAINT ua_pkey PRIMARY KEY,
+
+	email	VARCHAR(255) NOT NULL,
+
+	full_name VARCHAR(255) NOT NULL,
+
+	"password" TEXT NOT NULL,
+
+	"phone_number" VARCHAR(16) NULL,
+
+	"gender_id" INT NOT NULL
+			CONSTRAINT ua_eg_fkey REFERENCES enum.gender,
+
+	last_login TIMESTAMPTZ NOT NULL
+			DEFAULT CURRENT_TIMESTAMP,
+
+	register_at	TIMESTAMPTZ NOT NULL
+				DEFAULT CURRENT_TIMESTAMP	
+);
