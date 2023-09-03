@@ -1,5 +1,7 @@
-﻿using Library.Backend.Helpers;
+﻿using Dapper;
+using Library.Backend.Helpers;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 using Task.API.Entities;
 using Task.API.Models.Task;
 using Task.API.Service.Interfaces;
@@ -40,27 +42,34 @@ namespace Task.API.Service
 
         public async Task<List<TaskDto>> GetListAsync(Guid userId, CancellationToken cancellationToken)
         {
-            var tasks = await _context.TaskManagements
-                .Where(Q => Q.UserId == userId)
-                .AsNoTracking()
-                .Select(Q => new TaskDto
-                {
-                    CreatedAt = Q.CreatedAt,
-                    EndDate = Q.EndDate,
-                    PlannedEnd = Q.PlannedEnd,
-                    PlannedStart = Q.PlannedStart,
-                    StartDate = Q.StartDate,
-                    TaskId = Q.TaskId,
-                    TaskStatusId = Q.TaskStatusId,
-                    TaskType = Q.TaskType.Name,
-                    TaskStatus = Q.TaskStatus.Name,
-                    Title = Q.Title,
-                    Description = Q.Description,
-                    TaskTypeId = Q.TaskTypeId
-                })
-                .ToListAsync(cancellationToken);
+            var query = new StringBuilder();
 
-            return tasks;
+            //query sql
+            query.AppendLine($@"
+                    select 
+	                    tm.task_id as TaskId,
+	                    tm.task_status_id TaskStatusId,
+	                    tm.task_type_id TaskTypeId,
+	                    tm.description,
+	                    tm.title,
+	                    tm.planned_start as PlannedStart,
+	                    tm.planned_end as PlannedEnd,
+	                    tm.start_date as StartDate,
+	                    tm.end_date as EndDate,
+	                    tm.created_at as CreatedAt,
+	                    tt.name as TaskType,
+	                    ts.name as TaskStatus
+                    from task_management tm
+                    join enum.task_type tt on tm.task_type_id = tt.task_type_id
+                    join enum.task_status ts on tm.task_type_id = ts.task_status_id
+                    where user_id = '{userId}'");
+
+            var list = (await _context.Database
+                .GetDbConnection()
+                .QueryAsync<TaskDto>(query.ToString()))
+                .ToList();
+
+            return list;
         }
 
         public async Task<(ValidationError? error, TaskDto? task)> GetAsync(Guid userId, Guid taskId, CancellationToken cancellationToken)
