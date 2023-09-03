@@ -2,7 +2,7 @@
 {
     enum TaskStatus
     {
-        Created,
+        Created = 1,
         InProgress,
         Reschedule,
         Cancel,

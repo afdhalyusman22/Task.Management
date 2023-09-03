@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Task.API.Entities;
 using Task.API.Models.Task;
-using Task.API.Models.TaskStatus;
 using Task.API.Service.Interfaces;
 
 namespace Task.API.Service
@@ -57,6 +56,7 @@ namespace Task.API.Service
                     TaskStatus = Q.TaskStatus.Name,
                     Title = Q.Title,
                     Description = Q.Description,
+                    TaskTypeId = Q.TaskTypeId
                 })
                 .ToListAsync(cancellationToken);
 
@@ -66,21 +66,9 @@ namespace Task.API.Service
         public async Task<(ValidationError? error, TaskDto? task)> GetAsync(Guid userId, Guid taskId, CancellationToken cancellationToken)
         {
             var task = await _context.TaskManagements
-                .Where(Q => Q.TaskId == taskId)
-                .Select(Q => new TaskDto
-                {
-                    CreatedAt = Q.CreatedAt,
-                    EndDate = Q.EndDate,
-                    PlannedEnd = Q.PlannedEnd,
-                    PlannedStart = Q.PlannedStart,
-                    StartDate = Q.StartDate,
-                    TaskId = Q.TaskId,
-                    TaskStatusId = Q.TaskStatusId,
-                    TaskType = Q.TaskType.Name,
-                    TaskStatus = Q.TaskStatus.Name,
-                    Title = Q.Title,
-                    Description = Q.Description,
-                })
+                .Include(Q=>Q.TaskStatus)
+                .Include(Q=>Q.TaskType)
+                .Where(Q => Q.TaskId == taskId)                
                 .AsNoTracking()
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -102,7 +90,23 @@ namespace Task.API.Service
                 }, null);
             }
 
-            return (null, task);
+            var detail = new TaskDto
+            {
+                CreatedAt = task.CreatedAt,
+                EndDate = task.EndDate,
+                PlannedEnd = task.PlannedEnd,
+                PlannedStart = task.PlannedStart,
+                StartDate = task.StartDate,
+                TaskId = task.TaskId,
+                TaskStatusId = task.TaskStatusId,
+                TaskTypeId = task.TaskTypeId,
+                TaskType = task.TaskType.Name,
+                TaskStatus = task.TaskStatus.Name,
+                Title = task.Title,
+                Description = task.Description,
+            };
+
+            return (null, detail);
         }
 
         public async Task<ValidationError> CreateAsync(Guid userId, CreateUpdateTaskDto dto, CancellationToken cancellationToken)
@@ -127,7 +131,7 @@ namespace Task.API.Service
             var typeAny = await _context.TaskTypes
                 .AnyAsync(Q => Q.TaskTypeId == dto.TaskTypeId, cancellationToken);
 
-            if (typeAny)
+            if (!typeAny)
             {
                 return new ValidationError
                 {
@@ -225,7 +229,7 @@ namespace Task.API.Service
             var typeAny = await _context.TaskTypes
                 .AnyAsync(Q => Q.TaskTypeId == dto.TaskTypeId, cancellationToken);
 
-            if (typeAny)
+            if (!typeAny)
             {
                 return new ValidationError
                 {
