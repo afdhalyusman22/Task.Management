@@ -1,6 +1,6 @@
-﻿using Library.Backend.Helpers;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using User.API.Entities;
+using User.API.Models.Gender;
 using User.API.Service.Interfaces;
 
 namespace User.API.Service
@@ -14,14 +14,14 @@ namespace User.API.Service
             _context = context;
         }
 
-        public async Task<List<DropdownBase<int>>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<List<GenderDto>> GetListAsync(CancellationToken cancellationToken)
         {
             var genders = await _context.Genders
                 .AsNoTracking()
-                .Select(Q => new DropdownBase<int>
+                .Select(Q => new GenderDto
                 {
                     Id = Q.GenderId,
-                    Label = Q.Name
+                    Name = Q.Name
                 }).ToListAsync(cancellationToken);
 
             return genders;

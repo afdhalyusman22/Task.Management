@@ -4,7 +4,7 @@ using User.API.Service.Interfaces;
 
 namespace User.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : Controller
     {
@@ -16,7 +16,7 @@ namespace User.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Authenticate([FromBody] LoginDTO dto, CancellationToken cancellationToken)
+        public async Task<IActionResult> Authenticate([FromBody] LoginDto dto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
@@ -33,7 +33,7 @@ namespace User.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDTO dto, CancellationToken cancellationToken)
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {

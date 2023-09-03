@@ -2,7 +2,7 @@
 
 namespace User.API.Models.User
 {
-    public class UpdateDTO
+    public class UpdateDto
     {
         [Required(ErrorMessage = "FullName harus diisi")]
         public string FullName { get; set; } = null!;

@@ -2,7 +2,7 @@
 
 namespace User.API.Models.Auth
 {
-    public class RegisterDTO
+    public class RegisterDto
     {
         [Required(ErrorMessage = "Email harus diisi")]
         public string Email { get; set; } = null!;

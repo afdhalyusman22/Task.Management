@@ -1,9 +1,10 @@
 ﻿using Library.Backend.Helpers;
+using User.API.Models.Gender;
 
 namespace User.API.Service.Interfaces
 {
     public interface IGenderServices
     {
-        Task<List<DropdownBase<int>>> GetListAsync(CancellationToken cancellationToken);
+        Task<List<GenderDto>> GetListAsync(CancellationToken cancellationToken);
     }
 }

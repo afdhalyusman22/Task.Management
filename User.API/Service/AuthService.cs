@@ -21,9 +21,9 @@ namespace User.API.Service
             _appConfig = options.Value;
         }
 
-        public async Task<(ValidationError? error, TokenDTO? token)> AuthenticateAsync(LoginDTO dto, CancellationToken cancellationToken)
+        public async Task<(ValidationError? error, TokenDto? token)> AuthenticateAsync(LoginDto dto, CancellationToken cancellationToken)
         {
-            var r = new TokenDTO();
+            var r = new TokenDto();
 
             var user = await CheckUser(dto.PhoneEmail, cancellationToken);
 
@@ -78,7 +78,7 @@ namespace User.API.Service
             return (null, r);
         }
 
-        public async Task<ValidationError> RegisterAsync(RegisterDTO dto, CancellationToken cancellationToken)
+        public async Task<ValidationError> RegisterAsync(RegisterDto dto, CancellationToken cancellationToken)
         {
             var gender = await _context.Genders
                 .Where(Q => Q.GenderId == dto.GenderId)

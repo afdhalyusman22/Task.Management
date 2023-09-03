@@ -5,8 +5,8 @@ namespace User.API.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<ValidationError> UpdateAsync(Guid userId, UpdateDTO dto, CancellationToken cancellationToken);
-        Task<(ValidationError error, DetailDTO user)> GetAsync(Guid userId, CancellationToken cancellationToken);
+        Task<ValidationError> UpdateAsync(Guid userId, UpdateDto dto, CancellationToken cancellationToken);
+        Task<(ValidationError error, DetailDto user)> GetAsync(Guid userId, CancellationToken cancellationToken);
         Task<ValidationError> DeleteAsync(Guid userId, CancellationToken cancellationToken);
     }
 }

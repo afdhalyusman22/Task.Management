@@ -1,6 +1,6 @@
 ﻿namespace User.API.Models.User
 {
-    public class DetailDTO
+    public class DetailDto
     {
         public Guid UserId { get; set; }
 

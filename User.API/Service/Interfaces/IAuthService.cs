@@ -5,7 +5,7 @@ namespace User.API.Service.Interfaces
 {
     public interface IAuthService
     {
-        Task<(ValidationError? error, TokenDTO? token)> AuthenticateAsync(LoginDTO dto, CancellationToken cancellationToken);
-        Task<ValidationError> RegisterAsync(RegisterDTO dto, CancellationToken cancellationToken);
+        Task<(ValidationError? error, TokenDto? token)> AuthenticateAsync(LoginDto dto, CancellationToken cancellationToken);
+        Task<ValidationError> RegisterAsync(RegisterDto dto, CancellationToken cancellationToken);
     }
 }

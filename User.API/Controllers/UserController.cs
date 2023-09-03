@@ -7,7 +7,7 @@ using User.API.Services.Interfaces;
 namespace User.API.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserController : Controller
     {
@@ -21,7 +21,7 @@ namespace User.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateDTO dto, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update([FromBody] UpdateDto dto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {

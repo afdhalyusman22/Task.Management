@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Entities\" />
+    <Folder Include="Models\Task\" />
   </ItemGroup>
 
   <ItemGroup>

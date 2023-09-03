@@ -14,7 +14,7 @@ namespace User.API.Service
             _context = context;
         }
 
-        public async Task<ValidationError> UpdateAsync(Guid userId, UpdateDTO dto, CancellationToken cancellationToken)
+        public async Task<ValidationError> UpdateAsync(Guid userId, UpdateDto dto, CancellationToken cancellationToken)
         {
             var user = await _context.UserAccounts
                 .Where(Q => Q.UserId == userId && Q.DeletedAt != null)
@@ -66,12 +66,12 @@ namespace User.API.Service
         }
 
 
-        public async Task<(ValidationError error, DetailDTO user)> GetAsync(Guid userId, CancellationToken cancellationToken)
+        public async Task<(ValidationError error, DetailDto user)> GetAsync(Guid userId, CancellationToken cancellationToken)
         {
             var user = await _context.UserAccounts
                 .Where(Q => Q.UserId == userId && Q.DeletedAt != null)
                 .AsNoTracking()
-                .Select(Q => new DetailDTO
+                .Select(Q => new DetailDto
                 {
                     Email = Q.Email,
                     FullName = Q.FullName,
