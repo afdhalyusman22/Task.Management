@@ -43,6 +43,7 @@ CREATE TABLE task
 			CONSTRAINT t_tsi_fkey REFERENCES enum.task_status,
 
 	"title"	VARCHAR(255) NOT NULL,
+	"description"	TEXT NOT NULL,
 
 	"planned_start" TIMESTAMPTZ NOT NULL,
 
