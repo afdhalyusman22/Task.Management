@@ -76,7 +76,7 @@ namespace User.API.Controllers
                 ModelState.AddModelError(error.Field, error.Message);
                 return ValidationProblem(ModelState);
             }
-            return Ok();
+            return Ok("Success Delete");
         }
     }
 }

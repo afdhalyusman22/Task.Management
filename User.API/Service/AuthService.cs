@@ -130,7 +130,7 @@ namespace User.API.Service
         {
             // Get use
             var user = await _context.UserAccounts
-                .Where(Q => (Q.PhoneNumber == identifier || Q.Email == identifier) && Q.DeletedAt != null)
+                .Where(Q => (Q.PhoneNumber == identifier || Q.Email == identifier) && Q.DeletedAt == null)
                 .FirstOrDefaultAsync(cancellationToken);
 
             return user;
