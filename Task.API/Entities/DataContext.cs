@@ -11,7 +11,7 @@ public partial class DataContext : DbContext
     {
     }
 
-    public virtual DbSet<Task> Tasks { get; set; }
+    public virtual DbSet<TaskManagement> TaskManagements { get; set; }
 
     public virtual DbSet<TaskStatus> TaskStatuses { get; set; }
 
@@ -21,11 +21,11 @@ public partial class DataContext : DbContext
     {
         modelBuilder.HasPostgresExtension("uuid-ossp");
 
-        modelBuilder.Entity<Task>(entity =>
+        modelBuilder.Entity<TaskManagement>(entity =>
         {
             entity.HasKey(e => e.TaskId).HasName("ti_pkey");
 
-            entity.ToTable("task");
+            entity.ToTable("task_management");
 
             entity.Property(e => e.TaskId)
                 .ValueGeneratedNever()
@@ -33,6 +33,7 @@ public partial class DataContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnName("created_at");
+            entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.EndDate).HasColumnName("end_date");
             entity.Property(e => e.PlannedEnd).HasColumnName("planned_end");
             entity.Property(e => e.PlannedStart).HasColumnName("planned_start");
@@ -44,12 +45,12 @@ public partial class DataContext : DbContext
                 .HasColumnName("title");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.TaskStatus).WithMany(p => p.Tasks)
+            entity.HasOne(d => d.TaskStatus).WithMany(p => p.TaskManagements)
                 .HasForeignKey(d => d.TaskStatusId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("t_tsi_fkey");
 
-            entity.HasOne(d => d.TaskType).WithMany(p => p.Tasks)
+            entity.HasOne(d => d.TaskType).WithMany(p => p.TaskManagements)
                 .HasForeignKey(d => d.TaskTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("t_tti_fkey");

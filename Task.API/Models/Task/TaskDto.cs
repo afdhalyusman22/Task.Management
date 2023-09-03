@@ -13,7 +13,7 @@
         public string TaskStatus { get; set; } = null!;
 
         public string Title { get; set; } = null!;
-
+        public string Description { get; set; } = null!;
         public DateTime PlannedStart { get; set; }
 
         public DateTime PlannedEnd { get; set; }

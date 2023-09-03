@@ -4,18 +4,18 @@ namespace User.API.Models.Auth
 {
     public class RegisterDto
     {
-        [Required(ErrorMessage = "Email harus diisi")]
+        [Required]
         public string Email { get; set; } = null!;
 
-        [Required(ErrorMessage = "FullName harus diisi")]
+        [Required]
         public string FullName { get; set; } = null!;
 
-        [Required(ErrorMessage = "Password harus diisi")]
+        [Required]
         public string Password { get; set; } = null!;
 
         public string? PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Gender harus diisi")]
+        [Required]
         public int GenderId { get; set; }
     }
 }

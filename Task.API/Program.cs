@@ -1,12 +1,12 @@
 using Library.Backend.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
-using Task.API.Entities;
+//using Task.API.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Task.API.Service.Interfaces;
-using Task.API.Service;
+//using Task.API.Service.Interfaces;
+//using Task.API.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-services.AddDbContextPool<DataContext>(options =>
-{
-    var connString = configuration.GetConnectionString("TaskDB");
-    options.UseNpgsql(connString);
-});
+//services.AddDbContextPool<DataContext>(options =>
+//{
+//    var connString = configuration.GetConnectionString("TaskDB");
+//    options.UseNpgsql(connString);
+//});
 
 services.AddControllers();
 
@@ -63,9 +63,9 @@ services.AddAuthentication(x =>
     };
 });
 
-services.AddTransient<ITaskTypeService, TaskTypeService>();
-services.AddTransient<ITaskStatusService, TaskStatusService>();
-services.AddTransient<ITaskService, TaskService>();
+//services.AddTransient<ITaskTypeService, TaskTypeService>();
+//services.AddTransient<ITaskStatusService, TaskStatusService>();
+//services.AddTransient<ITaskService, TaskService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();

@@ -11,5 +11,5 @@ public partial class TaskType
 
     public DateTime CreatedAt { get; set; }
 
-    public virtual ICollection<Task> Tasks { get; set; } = new List<Task>();
+    public virtual ICollection<TaskManagement> TaskManagements { get; set; } = new List<TaskManagement>();
 }

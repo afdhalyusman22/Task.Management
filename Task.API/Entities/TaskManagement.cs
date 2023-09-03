@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Task.API.Entities;
 
-public partial class Task
+public partial class TaskManagement
 {
     public Guid TaskId { get; set; }
 
@@ -14,6 +14,8 @@ public partial class Task
     public int TaskStatusId { get; set; }
 
     public string Title { get; set; } = null!;
+
+    public string Description { get; set; } = null!;
 
     public DateTime PlannedStart { get; set; }
 
